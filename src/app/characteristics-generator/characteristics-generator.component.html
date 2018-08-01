@@ -1,0 +1,20 @@
+      <button type="button" mat-raised-button (click)="randomInit()">Generate</button>
+      <button type="button" mat-raised-button (click)="reset()">Reset</button>
+      <div *ngIf="showPoints">
+        Points left: {{getRemainingPoints()}}
+      </div>
+      <mat-list>
+        <mat-list-item *ngFor="let ch of characteristics">
+          <mat-form-field>
+            <input
+              matInput
+              type="number"
+              [placeholder]="ch.name"
+              [(ngModel)]="ch.value"
+              [ngModelOptions]="{standalone: true}"
+              [disabled]="disableInputs"
+            >
+          </mat-form-field>
+          <div>{{ch.value}}</div>
+        </mat-list-item>
+      </mat-list>
