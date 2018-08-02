@@ -12,10 +12,10 @@ phases:
       - ng build --prod
   post_build:
     commands:
-      - aws s3 cp dist s3://m0j0nz0r/ --recursive
+      - aws s3 cp dist/WarhammerRPG s3://rpg-character-manager/ --recursive
 artifacts:
   files:
     - '**/*'
   discard-paths: yes
-  base-directory: 'dist'
+  base-directory: 'dist/WarhammerRPG'
   
