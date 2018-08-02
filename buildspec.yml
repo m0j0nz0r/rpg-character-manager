@@ -1,0 +1,34 @@
+version: 0.2
+
+env:
+  variables:
+    BUILD_ENV: "prod"
+
+phases:
+  install:
+    commands:
+      - echo Installing angular CLI...
+      - npm install -g @angular/cli
+    pre_build:
+      - echo Installing dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Build started on `date`
+      - ng build --env=${BUILD_ENV}
+  post_build:
+    commands:
+      - command
+      - command
+artifacts:
+  files:
+    - location
+    - location
+  discard-paths: yes
+  base-directory: location
+cache:
+  paths:
+    - '**/*'
+  base-directory: 'dist'
+  discard-paths: yes
+  
