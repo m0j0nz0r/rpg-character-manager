@@ -16,5 +16,12 @@
             >
           </mat-form-field>
           <div>{{ch.value}}</div>
+          <button
+            mat-button
+            *ngIf="canReroll"
+            (click)="rerollCharacteristic(ch)"
+          >
+            <mat-icon svgIcon="d10"></mat-icon>
+          </button>
         </mat-list-item>
       </mat-list>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DiceService } from '../dice.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
 
 
 @Component({
@@ -9,11 +11,17 @@ import { DiceService } from '../dice.service';
 })
 export class CharacteristicsGeneratorComponent implements OnInit {
 
-  constructor() { }
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'd10',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/d10.svg')
+    );
+  }
 
   characteristics: {name: string, value:number}[];
   disableInputs: boolean;
   showPoints: boolean;
+  canReroll: boolean;
   ngOnInit() {
 
     const characteristicNames = [
@@ -38,11 +46,13 @@ export class CharacteristicsGeneratorComponent implements OnInit {
   randomInit() {
     this.disableInputs = true;
     this.showPoints = false;
+    this.canReroll = true;
     this.characteristics.forEach( ch => ch.value = DiceService.roll('2d10+25'));
   }
   reset() {
     this.disableInputs = false;
     this.showPoints = true;
+    this.canReroll = false;
     this.characteristics.forEach( ch => ch.value = 25);
   }
   getRemainingPoints() {
@@ -52,8 +62,10 @@ export class CharacteristicsGeneratorComponent implements OnInit {
     });
     return points;
   }
+  rerollCharacteristic(characteristic) {
+    characteristic.value = DiceService.roll('2d10+25');
+    console.log(characteristic);
+    this.canReroll = false;
+  }
 }
-// TODO: Generated scores disable inputs for editing.
-// TODO: Resetting re-enables inputs.
-
 // TODO: Think about point buy.
